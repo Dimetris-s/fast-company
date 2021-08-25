@@ -1,20 +1,32 @@
-import React from 'react';
+import React from "react";
+import Bookmark from "./bookmark";
+import Quality from "./quality";
 
-const User = ({id, name, qualities, profession, completedMeetings, rate, deleteClickHandler}) => {
-    return ( 
-        <tr>
-            <td>{name}</td>
-            <td>
-                {qualities.map(({_id, name, color}) => <span key={_id} className={`me-2 badge bg-${color}`}>{name}</span>)}
-            </td>
-            <td>{profession.name}</td>
-            <td>{completedMeetings}</td>
-            <td>{rate}/5</td>
-            <td>
-                <button onClick={() => deleteClickHandler(id)} type="button" className="btn btn-danger">Delete</button>
-            </td>
-        </tr>
-     );
-}
- 
+const User = ({_id, name, qualities, profession, completedMeetings, rate, bookmarked, onDelete, onChange}) => {
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>
+        {qualities.map((quality) => (
+          <Quality key={quality._id} {...quality} />
+        ))}
+      </td>
+      <td>{profession.name}</td>
+      <td>{completedMeetings}</td>
+      <td>{rate}/5</td>
+      <td>
+        <Bookmark bookmarked={bookmarked} onChange={onChange} userId={_id}/>
+      </td>
+      <td>
+        <button
+          onClick={() => onDelete(_id)}
+          type="button"
+          className="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+};
+
 export default User;
