@@ -19,7 +19,7 @@ const App = () => {
   return (
     <>
       <SearchStatus usersCount={users.length} />
-      <Users users={users} onDelete={handleDelete} onChange={bookmarkStatusChangeHandler}/>
+      {users.length > 0 && <Users users={users} onDelete={handleDelete} onChange={bookmarkStatusChangeHandler}/>}
     </>
   );
 };
