@@ -2,7 +2,17 @@ import React from "react";
 import Bookmark from "./bookmark";
 import Quality from "./quality";
 
-const User = ({_id, name, qualities, profession, completedMeetings, rate, bookmarked, onDelete, onChange}) => {
+const User = ({
+  _id,
+  name,
+  qualities,
+  profession,
+  completedMeetings,
+  rate,
+  bookmarked,
+  onDelete,
+  onChange,
+}) => {
   return (
     <tr>
       <td>{name}</td>
@@ -15,7 +25,7 @@ const User = ({_id, name, qualities, profession, completedMeetings, rate, bookma
       <td>{completedMeetings}</td>
       <td>{rate}/5</td>
       <td>
-        <Bookmark bookmarked={bookmarked} onChange={onChange} userId={_id}/>
+        <Bookmark bookmarked={bookmarked} onChange={onChange} userId={_id} />
       </td>
       <td>
         <button

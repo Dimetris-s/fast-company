@@ -1,7 +1,13 @@
 import React from "react";
 import User from "./user";
 
-const Users = ({ users, ...handlers }) => {
+const Users = ({ users, currentPage, usersPerPage, ...handlers }) => {
+  const renderUsers = () => {
+    const currentUsers = users.slice(currentPage * usersPerPage, currentPage * usersPerPage + usersPerPage)
+    return currentUsers.map((user) => {
+      return <User key={user._id} {...handlers} {...user} />;
+    })
+  }
   return (
     <table className="table">
       <thead>
@@ -16,9 +22,7 @@ const Users = ({ users, ...handlers }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => {
-          return <User key={user._id} {...handlers} {...user} />;
-        })}
+        {renderUsers()}
       </tbody>
     </table>
   );
