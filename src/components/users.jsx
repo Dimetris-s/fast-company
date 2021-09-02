@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import Pagination from "./pagination";
 import User from "./user";
-import {paginate} from '../utils/paginate'
-const Users = ({ users:allUsers, ...handlers }) => {
+import { paginate } from "../utils/paginate";
+import PropTypes from "prop-types";
+
+const Users = ({ users: allUsers, ...handlers }) => {
     const usersPerPage = 4;
     const [currentPage, setCurrentPage] = useState(1);
 
-    const users = paginate(allUsers, currentPage, usersPerPage)
+    const users = paginate(allUsers, currentPage, usersPerPage);
 
     const renderUsers = () => {
         return users.map((user) => {
             return <User key={user._id} {...handlers} {...user} />;
         });
     };
-    const pageChangeHandler =  page => {
+    const pageChangeHandler = (page) => {
         setCurrentPage(page);
     };
     return (
@@ -40,6 +42,12 @@ const Users = ({ users:allUsers, ...handlers }) => {
             />
         </>
     );
+};
+
+Users.propTypes = {
+    users: PropTypes.array.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 export default Users;

@@ -8,8 +8,6 @@ const App = () => {
         api.users.fetchAll().map((user) => ({ ...user, bookmarked: false }))
     );
 
-
-
     const handleDelete = (userId) => {
         const newUsers = users.filter((user) => user._id !== userId);
         setUsers(newUsers);
@@ -23,8 +21,6 @@ const App = () => {
         );
         setUsers(newUsers);
     };
-
-
 
     return (
         <>

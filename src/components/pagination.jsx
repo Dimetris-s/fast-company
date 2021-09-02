@@ -1,11 +1,11 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const Pagination = ({
     itemsCount,
     itemsPerPage,
     currentPage,
-    onPageChange,
+    onPageChange
 }) => {
     const pagesCount = Math.ceil(itemsCount / itemsPerPage);
 
@@ -22,7 +22,8 @@ const Pagination = ({
                         onClick={() => {
                             onPageChange(currentPage - 1);
                         }}
-                        className="page-link">
+                        className="page-link"
+                    >
                         Prev
                     </button>
                 </li>
@@ -31,11 +32,13 @@ const Pagination = ({
                         key={page}
                         className={`page-item ${
                             currentPage === page ? "active" : ""
-                        }`}>
+                        }`}
+                    >
                         <a
                             style={{ cursor: "pointer" }}
                             className="page-link"
-                            onClick={() => onPageChange(page)}>
+                            onClick={() => onPageChange(page)}
+                        >
                             {page}
                         </a>
                     </li>
@@ -44,7 +47,8 @@ const Pagination = ({
                     <button
                         disabled={currentPage === pages.length}
                         onClick={() => onPageChange(currentPage + 1)}
-                        className="page-link">
+                        className="page-link"
+                    >
                         Next
                     </button>
                 </li>
@@ -57,7 +61,7 @@ Pagination.propTypes = {
     itemsCount: PropTypes.number.isRequired,
     itemsPerPage: PropTypes.number.isRequired,
     currentPage: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired,
+    onPageChange: PropTypes.func.isRequired
 };
 
 export default Pagination;
