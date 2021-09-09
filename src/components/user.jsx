@@ -18,7 +18,7 @@ const User = ({
         <tr>
             <td>{name}</td>
             <td>
-                {qualities.map((quality) => (
+                {qualities.map(quality => (
                     <Quality key={quality._id} {...quality} />
                 ))}
             </td>
@@ -46,7 +46,7 @@ const User = ({
 };
 
 User.propTypes = {
-    _id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     qualities: PropTypes.array.isRequired,
     profession: PropTypes.object.isRequired,

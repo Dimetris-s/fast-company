@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Users from "./components/users";
 import api from "./API";
-import SearchStatus from "./components/searchStatus";
 
 const App = () => {
-    const [users, setUsers] = useState(
-        api.users.fetchAll().map((user) => ({ ...user, bookmarked: false }))
-    );
+    const [users, setUsers] = useState();
 
-    const handleDelete = (userId) => {
-        const newUsers = users.filter((user) => user._id !== userId);
+    useEffect(() => {
+        api.users.fetchAll().then(data => {
+            const users = data.map(user => ({ ...user, bookmarked: false }));
+            setUsers(users);
+        });
+    }, []);
+
+    const handleDelete = userId => {
+        const newUsers = users.filter(user => user._id !== userId);
         setUsers(newUsers);
     };
 
-    const bookmarkStatusChangeHandler = (userId) => {
-        const newUsers = users.map((user) =>
+    const bookmarkStatusChangeHandler = userId => {
+        const newUsers = users.map(user =>
             user._id === userId
                 ? { ...user, bookmarked: !user.bookmarked }
                 : user
@@ -24,8 +28,7 @@ const App = () => {
 
     return (
         <>
-            <SearchStatus usersCount={users.length} />
-            {users.length > 0 && (
+            {users && (
                 <Users
                     users={users}
                     onDelete={handleDelete}

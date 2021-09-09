@@ -10,7 +10,7 @@ const Quality = ({ _id, name, color }) => {
 };
 
 Quality.propTypes = {
-    _id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired
 };

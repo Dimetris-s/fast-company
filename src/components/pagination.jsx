@@ -9,7 +9,7 @@ const Pagination = ({
 }) => {
     const pagesCount = Math.ceil(itemsCount / itemsPerPage);
 
-    if (pagesCount === 1) return null;
+    if (pagesCount <= 1) return null;
 
     const pages = new Array(pagesCount).fill(0).map((_, i) => i + 1);
 
@@ -27,7 +27,7 @@ const Pagination = ({
                         Prev
                     </button>
                 </li>
-                {pages.map((page) => (
+                {pages.map(page => (
                     <li
                         key={page}
                         className={`page-item ${
