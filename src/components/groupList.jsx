@@ -8,22 +8,22 @@ const GroupList = ({
     selectedItem,
     onItemChange
 }) => {
-        return (
-            <ul className="list-group">
-                {Object.keys(items).map(key => (
-                    <li
-                        key={items[key][valueProp]}
-                        className={`list-group-item ${
-                            selectedItem === items[key] ? "active" : ""
-                        }`}
-                        onClick={() => onItemChange(items[key])}
-                        role="button"
-                    >
-                        {items[key][contentProp]}
-                    </li>
-                ))}
-            </ul>
-        );
+    return (
+        <ul className="list-group">
+            {Object.keys(items).map(key => (
+                <li
+                    key={items[key][valueProp]}
+                    className={`list-group-item ${
+                        selectedItem === items[key] ? "active" : ""
+                    }`}
+                    onClick={() => onItemChange(items[key])}
+                    role="button"
+                >
+                    {items[key][contentProp]}
+                </li>
+            ))}
+        </ul>
+    );
 };
 GroupList.defaultProps = {
     valueProp: "_id",
