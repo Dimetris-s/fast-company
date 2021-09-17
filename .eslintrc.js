@@ -22,9 +22,13 @@ module.exports = {
                 named: "never"
             }
         ],
-        quotes: ["error", "double", {
-            allowTemplateLiterals: true
-        }],
+        quotes: [
+            "error",
+            "double",
+            {
+                allowTemplateLiterals: true
+            }
+        ],
         "react/display-name": "off"
     }
 };
