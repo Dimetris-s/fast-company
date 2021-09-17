@@ -1,22 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const BookMark = ({ userId, bookmarked, onChange }) => {
+const BookMark = ({ bookmarked, onClick }) => {
     return (
         <i
             style={{ cursor: "pointer" }}
             className={`bi ${
                 bookmarked ? "bi-bookmark-check-fill" : "bi-bookmark"
             }`}
-            onClick={() => onChange(userId)}
+            onClick={onClick}
         />
     );
 };
 
 BookMark.propTypes = {
-    userId: PropTypes.string.isRequired,
     bookmarked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired
 };
 
 export default BookMark;

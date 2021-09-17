@@ -5,11 +5,9 @@ import api from "./API";
 const App = () => {
     const [users, setUsers] = useState();
 
-    useEffect(() => {
-        api.users.fetchAll().then(data => {
-            const users = data.map(user => ({ ...user, bookmarked: false }));
-            setUsers(users);
-        });
+    useEffect(async () => {
+        const users = await api.users.fetchAll();
+        setUsers(users);
     }, []);
 
     const handleDelete = userId => {
@@ -32,7 +30,7 @@ const App = () => {
                 <Users
                     users={users}
                     onDelete={handleDelete}
-                    onChange={bookmarkStatusChangeHandler}
+                    onToggleBookmark={bookmarkStatusChangeHandler}
                 />
             )}
         </>
