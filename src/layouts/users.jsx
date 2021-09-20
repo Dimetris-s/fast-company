@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "./pagination";
+import Pagination from "../components/pagination";
 import { paginate } from "../utils/paginate";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
+import GroupList from "../components/groupList";
+import SearchStatus from "../components/searchStatus";
 import api from "../API/index";
-import UsersTable from "./usersTable";
+import UsersTable from "../components/usersTable";
 import _ from "lodash";
 import { useParams } from "react-router";
+import User from "../components/user";
 
 const Users = () => {
     const usersPerPage = 8;
@@ -15,7 +16,7 @@ const Users = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
-    const {userId} = useParams()
+    const { userId } = useParams();
 
     useEffect(async () => {
         const users = await api.users.fetchAll();
@@ -60,6 +61,10 @@ const Users = () => {
         setSortBy(item);
     };
 
+    if (userId) {
+        return <User id={userId} users={users} />;
+    }
+
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
@@ -75,7 +80,7 @@ const Users = () => {
         const usersCrop = paginate(sortedUsers, currentPage, usersPerPage);
 
         return (
-            <div className="d-flex">
+            <div className="d-flex ps-2 pe-2">
                 {professions && (
                     <div className="d-flex flex-column me-3 mt-3">
                         <GroupList

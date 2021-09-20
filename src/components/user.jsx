@@ -1,59 +1,37 @@
-import React from "react";
-import Bookmark from "./bookmark";
-import Quality from "./quality";
+import React, { useEffect, useState } from "react";
+import QualitiesList from "./qualitiesList";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import api from "../API/index";
 
-const User = ({
-    _id,
-    name,
-    qualities,
-    profession,
-    completedMeetings,
-    rate,
-    bookmarked,
-    onDelete,
-    onToggleBookmark
-}) => {
+const User = ({ id }) => {
+    const [user, setUser] = useState();
+    useEffect(() => {
+        api.users.getById(id).then(user => setUser(user));
+    }, []);
+
+    if (!user) return <h1>LOADING</h1>;
+
     return (
-        <tr>
-            <td>{name}</td>
-            <td>
-                {qualities.map(quality => (
-                    <Quality key={quality._id} {...quality} />
-                ))}
-            </td>
-            <td>{profession.name}</td>
-            <td>{completedMeetings}</td>
-            <td>{rate}/5</td>
-            <td>
-                <Bookmark
-                    bookmarked={bookmarked}
-                    onClick={() => onToggleBookmark(_id)}
-                />
-            </td>
-            <td>
-                <button
-                    onClick={() => onDelete(_id)}
-                    type="button"
-                    className="btn btn-danger"
-                >
-                    Delete
-                </button>
-            </td>
-        </tr>
+        <div className="ps-3">
+            <h1 className="mb-3">{user.name}</h1>
+            <h2 className="mb-3">Профессия: {user.profession.name}</h2>
+            <div className="mb-3">
+                <QualitiesList qualities={user.qualities} />
+            </div>
+            <div className="mb-3">
+                completedMeetings: {user.completedMeetings}
+            </div>
+            <h2 className="mb-3">rate: {user.rate}</h2>
+            <Link to="/users">
+                <button className="btn btn-primary">Все пользователи</button>
+            </Link>
+        </div>
     );
 };
 
 User.propTypes = {
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    qualities: PropTypes.array.isRequired,
-    profession: PropTypes.object.isRequired,
-    completedMeetings: PropTypes.number.isRequired,
-    rate: PropTypes.number.isRequired,
-    bookmarked: PropTypes.bool.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onToggleBookmark: PropTypes.func.isRequired
+    id: PropTypes.string.isRequired
 };
 
 export default User;
