@@ -6,6 +6,7 @@ import SearchStatus from "./searchStatus";
 import api from "../API/index";
 import UsersTable from "./usersTable";
 import _ from "lodash";
+import { useParams } from "react-router";
 
 const Users = () => {
     const usersPerPage = 8;
@@ -14,6 +15,7 @@ const Users = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
+    const {userId} = useParams()
 
     useEffect(async () => {
         const users = await api.users.fetchAll();
