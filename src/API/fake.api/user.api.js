@@ -1,5 +1,6 @@
 import {
     professionsObject as professions
+    // professions
 } from "./professions.api";
 const qualities = {
     tedious: {

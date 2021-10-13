@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QualitiesList from "./qualitiesList";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import api from "../API/index";
 
 const User = ({ id }) => {
@@ -9,7 +9,10 @@ const User = ({ id }) => {
     useEffect(() => {
         api.users.getById(id).then(user => setUser(user));
     }, []);
-
+    const history = useHistory();
+    const clickHandler = () => {
+        history.push("/users");
+    };
     if (!user) return <h1>LOADING</h1>;
 
     return (
@@ -23,9 +26,9 @@ const User = ({ id }) => {
                 completedMeetings: {user.completedMeetings}
             </div>
             <h2 className="mb-3">rate: {user.rate}</h2>
-            <Link to="/users">
-                <button className="btn btn-primary">Все пользователи</button>
-            </Link>
+            <button onClick={clickHandler} className="btn btn-primary">
+                Все пользователи
+            </button>
         </div>
     );
 };
