@@ -35,7 +35,8 @@ const qualities = {
     }
 };
 
-const users = [{
+const users = [
+    {
         _id: "67rdca3eeb7f6fgeed471815",
         name: "Джон Дориан",
         profession: professions.doctor,
@@ -152,13 +153,12 @@ const fetchAll = () =>
         }, 2000);
     });
 
-const getById = id => (
+const getById = id =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(users.find(user => user._id === id));
         }, 1000);
-    })
-);
+    });
 
 export default {
     fetchAll,

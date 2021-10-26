@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ name, type, label, onChange, value, error, placeholder }) => {
+const TextField = ({
+    name,
+    type,
+    label,
+    onChange,
+    value,
+    error,
+    placeholder
+}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const toggleShowPassword = () => {
@@ -29,10 +37,14 @@ const TextField = ({ name, type, label, onChange, value, error, placeholder }) =
                         className="btn btn-outline-secondary"
                         type="button"
                     >
-                        <i className={`bi bi-eye${showPassword ? "-slash" : ""}`}/>
+                        <i
+                            className={`bi bi-eye${
+                                showPassword ? "-slash" : ""
+                            }`}
+                        />
                     </button>
                 )}
-            {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );

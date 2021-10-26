@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "../components/pagination";
-import { paginate } from "../utils/paginate";
-import GroupList from "../components/groupList";
-import SearchStatus from "../components/searchStatus";
-import TextField from "./textField";
-import api from "../API/index";
-import UsersTable from "../components/usersTable";
+import Pagination from "../../common/pagination";
+import { paginate } from "../../../utils/paginate";
+import GroupList from "../../common/groupList";
+import SearchStatus from "../../UI/searchStatus";
+import TextField from "../../common/form/textField";
+import UsersTable from "../../UI/usersTable";
+import api from "../../../API/index";
 import _ from "lodash";
 
-const Users = () => {
+const UsersListPage = () => {
     const usersPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
@@ -132,4 +132,4 @@ const Users = () => {
     return "Loading...";
 };
 
-export default Users;
+export default UsersListPage;
