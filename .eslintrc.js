@@ -29,6 +29,7 @@ module.exports = {
                 allowTemplateLiterals: true
             }
         ],
-        "react/display-name": "off"
+        "react/display-name": "off",
+        "multiline-ternary": ["off"]
     }
 };
