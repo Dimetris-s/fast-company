@@ -44,7 +44,7 @@ const UsersListPage = () => {
     const bookmarkStatusChangeHandler = userId => {
         const newUsers = users.map(user =>
             user._id === userId
-                ? { ...user, bookmarked: !user.bookmarked }
+                ? { ...user, bookmark: !user.bookmark }
                 : user
         );
         setUsers(newUsers);

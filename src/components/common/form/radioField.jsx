@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const RadioFeild = ({ name, options, value, onChange, label }) => {
+    const changeHandler = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
     return (
         <div className="mb-4">
             <label htmlFor={name} className="d-block form-label">
@@ -16,7 +19,7 @@ const RadioFeild = ({ name, options, value, onChange, label }) => {
                         id={option.name + "_" + option.value}
                         value={option.value}
                         checked={value === option.value}
-                        onChange={onChange}
+                        onChange={changeHandler}
                     />
                     <label
                         className="form-check-label"

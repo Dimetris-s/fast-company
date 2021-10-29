@@ -11,7 +11,7 @@ const UserPage = ({ id }) => {
     }, []);
     const history = useHistory();
     const clickHandler = () => {
-        history.push("/users");
+        history.push("/users/" + id + "/edit");
     };
     if (!user) return <h1>LOADING</h1>;
 
@@ -27,7 +27,7 @@ const UserPage = ({ id }) => {
             </div>
             <h2 className="mb-3">rate: {user.rate}</h2>
             <button onClick={clickHandler} className="btn btn-primary">
-                Все пользователи
+                Изменить
             </button>
         </div>
     );

@@ -20,6 +20,10 @@ const SelectField = ({
                   value: options[option]._id
               }))
             : options;
+
+    const changeHandler = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
     return (
         <div className="mb-4">
             <label htmlFor={name} className="form-label">
@@ -29,10 +33,10 @@ const SelectField = ({
                 className={getInputClasses()}
                 id={name}
                 value={value}
-                onChange={onChange}
+                onChange={changeHandler}
                 name={name}
             >
-                <option selected={value === ""} disabled value="">
+                <option disabled value="">
                     {defaultOption}
                 </option>
                 {optionsArray &&

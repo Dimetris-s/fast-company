@@ -4,6 +4,8 @@ import TextField from "../common/form/textField";
 import API from "../../API";
 import SelectField from "../common/form/selectField";
 import RadioFeild from "../common/form/radioField";
+import MultiSelectField from "../common/form/multiSelectField";
+import CheckboxField from "../common/form/checkboxField";
 
 const RegisterForm = () => {
     const config = {
@@ -28,18 +30,27 @@ const RegisterForm = () => {
             isRequired: {
                 message: "Необходимо выбрать профессию"
             }
+        },
+        licence: {
+            isRequired: {
+                message: "Вы не можете использовать наш сервис без подтверждения нашего лицензионного соглашения"
+            }
         }
     };
     const [data, setData] = useState({
         email: "",
         password: "",
         profession: "",
-        sex: "male"
+        sex: "male",
+        qualities: [],
+        licence: false
     });
     const [errors, setErrors] = useState({});
     const [professions, setProfessions] = useState();
+    const [qualities, setQualities] = useState();
     useEffect(() => {
         API.professions.fetchAll().then(data => setProfessions(data));
+        API.qualities.fetchAll().then(data => setQualities(data));
     }, []);
     useEffect(() => {
         console.log(professions);
@@ -47,8 +58,7 @@ const RegisterForm = () => {
     useEffect(() => {
         validate();
     }, [data]);
-    const handleChange = event => {
-        const { name, value } = event.target;
+    const handleChange = ({ name, value }) => {
         setData(prevState => ({ ...prevState, [name]: value }));
     };
     const validate = () => {
@@ -101,6 +111,21 @@ const RegisterForm = () => {
                     { name: "Other", value: "other" }
                 ]}
             />
+            <MultiSelectField
+                name="qualities"
+                onChange={handleChange}
+                label="Выберите ваши качества"
+                options={qualities}
+                value={data.qualities}
+            />
+            <CheckboxField
+                name="licence"
+                onChange={handleChange}
+                value={data.licence}
+                error={errors.licence}
+            >
+                Я принимаю условия <a>соглашения</a>
+            </CheckboxField>
             <button
                 className="btn btn-primary w-100 mx-auto"
                 disabled={!isValid}

@@ -18,13 +18,16 @@ const TextField = ({
     const getInputClasses = () => {
         return `form-control ${error ? "is-invalid" : ""}`;
     };
+    const changeHandler = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
     return (
         <div className="mb-4">
             <label htmlFor={name}>{label}</label>
             <div className="input-group has-validation">
                 <input
                     className={getInputClasses()}
-                    onChange={onChange}
+                    onChange={changeHandler}
                     type={showPassword ? "text" : type}
                     id={name}
                     name={name}

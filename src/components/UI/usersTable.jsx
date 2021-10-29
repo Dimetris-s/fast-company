@@ -32,10 +32,10 @@ const UsersTable = ({
         rate: { name: "Оценка", path: "rate" },
         bookmark: {
             name: "Избранное",
-            path: "bookmarked",
+            path: "bookmark",
             component: user => (
                 <BookMark
-                    bookmarked={user.bookmarked}
+                    bookmark={user.bookmark}
                     onClick={() => onToggleBookmark(user._id)}
                 />
             )
