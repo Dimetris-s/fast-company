@@ -30,6 +30,7 @@ module.exports = {
             }
         ],
         "react/display-name": "off",
-        "multiline-ternary": ["off"]
+        "multiline-ternary": ["off"],
+        "curly": "off"
     }
 };

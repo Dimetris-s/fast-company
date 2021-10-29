@@ -13,13 +13,10 @@ const SelectField = ({
     const getInputClasses = () => {
         return `form-select ${error ? "is-invalid" : ""}`;
     };
-    const optionsArray =
-        !Array.isArray(options) && typeof options === "object"
-            ? Object.keys(options).map(option => ({
-                  name: options[option].name,
-                  value: options[option]._id
-              }))
-            : options;
+    const optionsArray = options && Object.keys(options).map(option => ({
+        name: options[option].name,
+        value: options[option]._id
+    }));
 
     const changeHandler = ({ target }) => {
         onChange({ name: target.name, value: target.value });
