@@ -9,23 +9,23 @@ const UserPage = ({ id }) => {
     const [user, setUser] = useState();
     const [comments, setComments] = useState();
     useEffect(() => {
-        api.users.getById(id).then(user => setUser(user));
+        api.users.getById(id).then((user) => setUser(user));
         api.comments
             .fetchCommentsForUser(id)
-            .then(comments => setComments(comments));
+            .then((comments) => setComments(comments));
     }, []);
 
     const history = useHistory();
     const editClickHandler = () => history.push("/users/" + id + "/edit");
-    const handleCommentDelete = id => {
+    const handleCommentDelete = (id) => {
         api.comments.remove(id);
-        const newComments = comments.filter(c => c._id !== id);
+        const newComments = comments.filter((c) => c._id !== id);
         setComments(newComments);
     };
     if (!user) return <h1>LOADING</h1>;
-    const handleAddComment = data => {
-        api.comments.add(data).then(newComment => {
-            setComments(prevState => [...prevState, newComment]);
+    const handleAddComment = (data) => {
+        api.comments.add(data).then((newComment) => {
+            setComments((prevState) => [...prevState, newComment]);
         });
     };
     return (

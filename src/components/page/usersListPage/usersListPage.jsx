@@ -7,6 +7,7 @@ import TextField from "../../common/form/textField";
 import UsersTable from "../../UI/usersTable";
 import api from "../../../API/index";
 import _ from "lodash";
+import { useUsers } from "../../../hooks/useUsers";
 
 const UsersListPage = () => {
     const usersPerPage = 8;
@@ -14,46 +15,41 @@ const UsersListPage = () => {
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const [users, setUsers] = useState();
     const [searchValue, setSearchValue] = useState("");
-
-    useEffect(async () => {
-        const users = await api.users.fetchAll();
-        setUsers(users);
-    }, []);
+    const { users } = useUsers();
 
     useEffect(() => {
         api.professions
             .fetchAll()
-            .then(professions => setProfessions(professions));
+            .then((professions) => setProfessions(professions));
     }, []);
 
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
 
-    const handleSearch = e => {
+    const handleSearch = (e) => {
         clearFilter();
         setSearchValue(e.target.value);
     };
-    const handleDelete = userId => {
-        const newUsers = users.filter(user => user._id !== userId);
-        setUsers(newUsers);
+    const handleDelete = (userId) => {
+        const newUsers = users.filter((user) => user._id !== userId);
+        // setUsers(newUsers);
+        console.log(newUsers);
     };
 
-    const bookmarkStatusChangeHandler = userId => {
-        const newUsers = users.map(user =>
-            user._id === userId
-                ? { ...user, bookmark: !user.bookmark }
-                : user
+    const bookmarkStatusChangeHandler = (userId) => {
+        const newUsers = users.map((user) =>
+            user._id === userId ? { ...user, bookmark: !user.bookmark } : user
         );
-        setUsers(newUsers);
+        // setUsers(newUsers);
+        console.log(newUsers);
     };
 
-    const pageChangeHandler = page => {
+    const pageChangeHandler = (page) => {
         setCurrentPage(page);
     };
-    const professionSelectHandler = item => {
+    const professionSelectHandler = (item) => {
         setSearchValue("");
         setSelectedProf(item);
     };
@@ -61,17 +57,17 @@ const UsersListPage = () => {
     const clearFilter = () => {
         setSelectedProf();
     };
-    const sortHandler = item => {
+    const sortHandler = (item) => {
         setSortBy(item);
     };
 
     if (users) {
         const searchedUsers = searchValue
-            ? users.filter(user => user.name.toLowerCase().match(searchValue))
+            ? users.filter((user) => user.name.toLowerCase().match(searchValue))
             : users;
         const filteredUsers = selectedProf
             ? searchedUsers.filter(
-                  user =>
+                  (user) =>
                       JSON.stringify(user.profession) ===
                       JSON.stringify(selectedProf)
               )

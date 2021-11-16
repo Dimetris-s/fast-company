@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const SearchStatus = ({ usersCount }) => {
-    const renderPhrase = number => {
+    const renderPhrase = (number) => {
         switch (true) {
             case number === 0:
                 return "Никто с тобой не тусанет";

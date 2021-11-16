@@ -10,7 +10,7 @@ const GroupList = ({
 }) => {
     return (
         <ul className="list-group">
-            {Object.keys(items).map(key => (
+            {Object.keys(items).map((key) => (
                 <li
                     key={items[key][valueProp]}
                     className={`list-group-item ${

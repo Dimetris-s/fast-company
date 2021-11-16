@@ -22,11 +22,7 @@ const CheckboxField = ({ name, value, onChange, error, children }) => {
                 <label className="form-check-label" htmlFor={name}>
                     {children}
                 </label>
-                {error && (
-                    <div className="invalid-feedback">
-                        {error}
-                    </div>
-                )}
+                {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );

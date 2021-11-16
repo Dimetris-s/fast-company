@@ -13,15 +13,13 @@ module.exports = {
     },
     plugins: ["react"],
     rules: {
-        indent: ["off"],
         semi: [2, "always"],
+        indent: [0, 4],
         "space-before-function-paren": [
             "error",
-            {
-                anonymous: "always",
-                named: "never"
-            }
+            { anonymous: "always", named: "never" }
         ],
+        "multiline-ternary": ["off"],
         quotes: [
             "error",
             "double",
@@ -29,8 +27,6 @@ module.exports = {
                 allowTemplateLiterals: true
             }
         ],
-        "react/display-name": "off",
-        "multiline-ternary": ["off"],
-        "curly": "off"
+        "react/display-name": "off"
     }
 };

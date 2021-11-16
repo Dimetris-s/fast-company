@@ -33,14 +33,14 @@ const LoginForm = () => {
         validate();
     }, [data]);
     const handleChange = ({ name, value }) => {
-        setData(prevState => ({ ...prevState, [name]: value }));
+        setData((prevState) => ({ ...prevState, [name]: value }));
     };
     const validate = () => {
         const errors = validator(data, config);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
-    const submitHandler = event => {
+    const submitHandler = (event) => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;

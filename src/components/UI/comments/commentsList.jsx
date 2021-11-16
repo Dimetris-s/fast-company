@@ -23,7 +23,7 @@ const CommentsList = ({ comments, onDelete, onCommentAdd, pageId }) => {
         }
     };
     useEffect(() => {
-        API.users.fetchAll().then(data => setUsers(data));
+        API.users.fetchAll().then((data) => setUsers(data));
     }, []);
     useEffect(() => {
         validate();
@@ -34,7 +34,7 @@ const CommentsList = ({ comments, onDelete, onCommentAdd, pageId }) => {
         return Object.keys(errors).length === 0;
     };
     const handleChange = ({ name, value }) => {
-        setData(prevState => ({
+        setData((prevState) => ({
             ...prevState,
             [name]: value
         }));
@@ -86,7 +86,7 @@ const CommentsList = ({ comments, onDelete, onCommentAdd, pageId }) => {
                     <div className="card-body">
                         <h2>Comments</h2>
                         <hr />
-                        {comments.map(comment => (
+                        {comments.map((comment) => (
                             <Comment
                                 key={comment._id}
                                 onDelete={onDelete}

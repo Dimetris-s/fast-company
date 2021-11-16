@@ -6,7 +6,7 @@ import { getDate } from "../../../utils/getDate";
 const Comment = ({ comment, onDelete }) => {
     const [user, setUser] = useState();
     useEffect(() => {
-        API.users.getById(comment.userId).then(user => setUser(user));
+        API.users.getById(comment.userId).then((user) => setUser(user));
     }, []);
 
     return (

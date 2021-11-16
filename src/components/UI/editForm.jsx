@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 
 const EditForm = ({ user }) => {
     const history = useHistory();
-    const userQualities = user.qualities.map(quality => ({
+    const userQualities = user.qualities.map((quality) => ({
         value: quality._id,
         label: quality.name
     }));
@@ -45,33 +45,33 @@ const EditForm = ({ user }) => {
     const [allQualities, setAllQualities] = useState();
     const qualitiesArray =
         allQualities &&
-        Object.keys(allQualities).map(qualName => ({
+        Object.keys(allQualities).map((qualName) => ({
             _id: allQualities[qualName]._id,
             name: allQualities[qualName].name,
             color: allQualities[qualName].color
         }));
     useEffect(() => {
-        API.professions.fetchAll().then(data => setProfessions(data));
-        API.qualities.fetchAll().then(data => setAllQualities(data));
+        API.professions.fetchAll().then((data) => setProfessions(data));
+        API.qualities.fetchAll().then((data) => setAllQualities(data));
     }, []);
     useEffect(() => {
         const errors = validator(data, config);
         setErrors(errors);
     }, [data]);
-    const submitHandler = event => {
+    const submitHandler = (event) => {
         event.preventDefault();
         const newUser = {
             ...data,
             profession:
                 professions[
                     Object.keys(professions).find(
-                        professionName =>
+                        (professionName) =>
                             professions[professionName]._id === data.profession
                     )
                 ],
-            qualities: data.qualities.map(dataQuality =>
+            qualities: data.qualities.map((dataQuality) =>
                 qualitiesArray.find(
-                    quality => quality._id === dataQuality.value
+                    (quality) => quality._id === dataQuality.value
                 )
             )
         };
@@ -80,7 +80,7 @@ const EditForm = ({ user }) => {
             .then(() => history.push(`/users/${user._id}`));
     };
     const handleChange = ({ name, value }) => {
-        setData(prevState => ({ ...prevState, [name]: value }));
+        setData((prevState) => ({ ...prevState, [name]: value }));
     };
     const isInvalid = Object.keys(errors).length > 0;
     return (

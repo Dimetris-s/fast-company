@@ -27,7 +27,7 @@ const Pagination = ({
                         Prev
                     </button>
                 </li>
-                {pages.map(page => (
+                {pages.map((page) => (
                     <li
                         key={page}
                         className={`page-item ${

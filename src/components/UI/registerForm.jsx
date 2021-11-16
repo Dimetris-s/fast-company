@@ -33,7 +33,8 @@ const RegisterForm = () => {
         },
         licence: {
             isRequired: {
-                message: "Вы не можете использовать наш сервис без подтверждения нашего лицензионного соглашения"
+                message:
+                    "Вы не можете использовать наш сервис без подтверждения нашего лицензионного соглашения"
             }
         }
     };
@@ -49,8 +50,8 @@ const RegisterForm = () => {
     const [professions, setProfessions] = useState();
     const [qualities, setQualities] = useState();
     useEffect(() => {
-        API.professions.fetchAll().then(data => setProfessions(data));
-        API.qualities.fetchAll().then(data => setQualities(data));
+        API.professions.fetchAll().then((data) => setProfessions(data));
+        API.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
     useEffect(() => {
         console.log(professions);
@@ -59,14 +60,14 @@ const RegisterForm = () => {
         validate();
     }, [data]);
     const handleChange = ({ name, value }) => {
-        setData(prevState => ({ ...prevState, [name]: value }));
+        setData((prevState) => ({ ...prevState, [name]: value }));
     };
     const validate = () => {
         const errors = validator(data, config);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
-    const submitHandler = event => {
+    const submitHandler = (event) => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;

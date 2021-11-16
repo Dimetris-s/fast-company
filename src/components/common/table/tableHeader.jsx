@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TableHeader = ({ selectedSort, onSort, columns }) => {
-    const sortHandler = item => {
+    const sortHandler = (item) => {
         if (item === selectedSort.path) {
-            onSort(selectedSort => ({
+            onSort((selectedSort) => ({
                 ...selectedSort,
                 order: selectedSort.order === "asc" ? "desc" : "asc"
             }));
@@ -15,7 +15,7 @@ const TableHeader = ({ selectedSort, onSort, columns }) => {
     return (
         <thead>
             <tr>
-                {Object.keys(columns).map(column => (
+                {Object.keys(columns).map((column) => (
                     <th
                         key={column}
                         role={columns[column].path && "button"}
