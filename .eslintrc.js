@@ -26,7 +26,6 @@ module.exports = {
             {
                 allowTemplateLiterals: true
             }
-        ],
-        "react/display-name": "off"
+        ]
     }
 };
