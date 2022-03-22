@@ -6,14 +6,22 @@ import GroupList from "../../common/groupList";
 import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
-import { useUser } from "../../../hooks/useUsers";
-import { useProfessions } from "../../../hooks/useProfession";
-import { useAuth } from "../../../hooks/useAuth";
+
+import {
+    getProfessionLoadingStatus,
+    getProfessions
+} from "../../../store/profession";
+import { useSelector } from "react-redux";
+import { getCurrentUserId, getUsersList } from "../../../store/user";
 const UsersListPage = () => {
-    const { users } = useUser();
-    const { currentUser } = useAuth();
+    const users = useSelector(getUsersList());
+
+    const currentUserId = useSelector(getCurrentUserId());
+
+    const professions = useSelector(getProfessions());
+    const professionsLoading = useSelector(getProfessionLoadingStatus());
+
     const [currentPage, setCurrentPage] = useState(1);
-    const { professions, isLoading: profLoading } = useProfessions();
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
@@ -21,6 +29,7 @@ const UsersListPage = () => {
 
     const handleDelete = (userId) => {
         console.log("delete user");
+        // setUsers(users.filter((user) => user._id !== userId));
     };
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {
@@ -52,6 +61,7 @@ const UsersListPage = () => {
     const handleSort = (item) => {
         setSortBy(item);
     };
+
     function filterUsers(data) {
         const filteredUsers = searchQuery
             ? data.filter(
@@ -61,9 +71,13 @@ const UsersListPage = () => {
                           .indexOf(searchQuery.toLowerCase()) !== -1
               )
             : selectedProf
-            ? data.filter((user) => user.profession === selectedProf._id)
+            ? data.filter(
+                  (user) =>
+                      JSON.stringify(user.profession) ===
+                      JSON.stringify(selectedProf)
+              )
             : data;
-        return filteredUsers.filter((u) => u._id !== currentUser._id);
+        return filteredUsers.filter((u) => u._id !== currentUserId);
     }
     const filteredUsers = filterUsers(users);
     const count = filteredUsers.length;
@@ -75,7 +89,7 @@ const UsersListPage = () => {
 
     return (
         <div className="d-flex">
-            {professions && !profLoading && (
+            {professions && !professionsLoading && (
                 <div className="d-flex flex-column flex-shrink-0 p-3">
                     <GroupList
                         selectedItem={selectedProf}

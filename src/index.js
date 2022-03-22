@@ -4,13 +4,20 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import App from "./app/App";
-import { BrowserRouter } from "react-router-dom";
+import { cretateStore } from "./app/store/createStore";
+import { Provider } from "react-redux";
+import { Router } from "react-router-dom";
+import history from "./app/utils/history";
+
+const store = cretateStore();
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <Router history={history}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </Router>
     </React.StrictMode>,
     document.getElementById("root")
 );

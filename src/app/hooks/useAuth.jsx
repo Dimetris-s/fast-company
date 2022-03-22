@@ -6,7 +6,7 @@ import userService from "../services/user.service";
 import localStorageService, {
     setTokens
 } from "../services/localStorage.service";
-import { randomInt } from "../utils/randomInt";
+import { useHistory } from "react-router-dom";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
+    const history = useHistory();
 
     async function logIn({ email, password }) {
         try {
@@ -44,7 +45,6 @@ const AuthProvider = ({ children }) => {
             if (code === 400) {
                 switch (message) {
                     case "INVALID_PASSWORD":
-                    case "INVALID_EMAIL":
                         throw new Error("Email или пароль введены некорректно");
 
                     default:
@@ -55,13 +55,26 @@ const AuthProvider = ({ children }) => {
             }
         }
     }
-    async function signUp({
-        email,
-        password,
-        rate = randomInt(1, 5),
-        completedMeetings = randomInt(0, 200),
-        ...rest
-    }) {
+    function logOut() {
+        localStorageService.removeAuthData();
+        setUser(null);
+        console.log("push");
+        history.push("/");
+    }
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    async function updateUserData(data) {
+        const { content } = await userService.update(data);
+        setUser(content);
+        try {
+            const { content } = await userService.update(data);
+            setUser(content);
+        } catch (error) {
+            errorCatcher(error);
+        }
+    }
+    async function signUp({ email, password, ...rest }) {
         try {
             const { data } = await httpAuth.post(`accounts:signUp`, {
                 email,
@@ -69,12 +82,11 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
-
             await createUser({
                 _id: data.localId,
                 email,
-                rate,
-                completedMeetings,
+                rate: randomInt(1, 5),
+                completedMeetings: randomInt(0, 200),
                 image: `https://avatars.dicebear.com/api/avataaars/${(
                     Math.random() + 1
                 )
@@ -94,8 +106,20 @@ const AuthProvider = ({ children }) => {
                     throw errorObject;
                 }
             }
-            // throw new Error
         }
+    }
+    async function createUser(data) {
+        try {
+            const { content } = await userService.create(data);
+            console.log(content);
+            setUser(content);
+        } catch (error) {
+            errorCatcher(error);
+        }
+    }
+    function errorCatcher(error) {
+        const { message } = error.response.data;
+        setError(message);
     }
     async function getUserData() {
         try {
@@ -107,24 +131,8 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     }
-    async function createUser(data) {
-        try {
-            const { content } = await userService.create(data);
-            setUser(content);
-        } catch (error) {
-            errorCatcher(error);
-        }
-    }
-    function errorCatcher(error) {
-        const { message } = error.response.data;
-        setError(message);
-    }
-    function logOut() {
-        localStorageService.clearUserData();
-        setUser(null);
-    }
     useEffect(() => {
-        if (localStorageService.getUserId()) {
+        if (localStorageService.getAccessToken()) {
             getUserData();
         } else {
             setLoading(false);
@@ -137,7 +145,9 @@ const AuthProvider = ({ children }) => {
         }
     }, [error]);
     return (
-        <AuthContext.Provider value={{ signUp, logIn, currentUser, logOut }}>
+        <AuthContext.Provider
+            value={{ signUp, logIn, currentUser, logOut, updateUserData }}
+        >
             {!isLoading ? children : "Loading..."}
         </AuthContext.Provider>
     );

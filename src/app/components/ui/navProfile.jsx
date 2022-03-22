@@ -1,35 +1,34 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
-
+import { getCurrentUserData } from "../../store/user";
 const NavProfile = () => {
-    const { currentUser } = useAuth();
-    const [showMenu, setShowMenu] = useState(false);
-    const toggleMenu = () => setShowMenu((prev) => !prev);
-
+    const currentUser = useSelector(getCurrentUserData());
+    const [isOpen, setOpen] = useState(false);
+    const toggleMenu = () => {
+        setOpen((prevState) => !prevState);
+    };
+    if (!currentUser) return "loading";
     return (
-        <div className="dropdown">
-            <div
-                className="btn dropdown-toggle d-flex align-items-center"
-                onClick={toggleMenu}
-            >
-                <div className="me-3">{currentUser.name}</div>
+        <div className="dropdown" onClick={toggleMenu}>
+            <div className="btn dropdown-toggle d-flex align-items-center">
+                <div className="me-2">{currentUser.name}</div>
                 <img
                     src={currentUser.image}
-                    alt="avatar"
-                    className="img img-responsive"
+                    alt=""
                     height="40"
+                    className="img-responsive rounded-circle"
                 />
             </div>
-            <div className={"dropdown-menu w-100" + (showMenu ? " show" : "")}>
+            <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
                 <Link
-                    className="dropdown-item"
                     to={`/users/${currentUser._id}`}
+                    className="dropdown-item"
                 >
                     Profile
                 </Link>
-                <Link className="dropdown-item" to="/logout">
-                    Logout
+                <Link to="/logout" className="dropdown-item">
+                    Log Out
                 </Link>
             </div>
         </div>
